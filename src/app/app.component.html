@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let story of stories| filter:searchText | paginate: { itemsPerPage: 20, currentPage: p }">      
+        <tr *ngFor="let story of stories| filter:searchText | paginate: { itemsPerPage: 20, currentPage: pageSize }">      
           <td>
            <a *ngIf="story?.url" target="_blank" href="{{ story?.url}}"> {{ story?.title}}</a> 
            <div *ngIf="!story?.url"> {{ story?.title}}</div> 
@@ -34,7 +34,7 @@
   </div>
 
 <div *ngIf="stories.length>0">
-<div style="text-align: center;"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
+<div style="text-align: center;"><pagination-controls (pageChange)="pageSize = $event"></pagination-controls></div>
 </div>
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple"></ngx-spinner> 
 </div>

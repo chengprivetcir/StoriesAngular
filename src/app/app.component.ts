@@ -8,21 +8,27 @@ import { NgxSpinnerService } from 'ngx-spinner'
    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-   p: number = 1;
+
+   pageSize: number = 1;
    stories= [];
    searchText;
 
-   constructor(private service :StoryserviceService,private spinner: NgxSpinnerService){}
-   ngOnInit(){
+   constructor(private service :StoryserviceService,private spinner: NgxSpinnerService){
 
+   }
+
+   ngOnInit(){
+     //loading News
      this.spinner.show();
+     //http request
      this.service.getStories().subscribe(
+      //Success 
        (data: any[])=>{
-      this.spinner.hide();  
-      console.log(data);
-      this.stories = data;
+        this.spinner.hide();  
+        this.stories = data;
       },
-      ()=>{this.spinner.hide();
-      })
+      //Error 
+        ()=>{this.spinner.hide();
+    })
    }
 }

@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { environment } from './../environments/environment';
 
 @Injectable()
 export class StoryserviceService {
-  private url='https://wafflehouseappservice.azurewebsites.net/api/stories';
-  constructor(private http:HttpClient) { 
 
+  constructor(private http:HttpClient) { 
   }
 
   getStories(){
-    return this.http.get(this.url);
+    console.log(environment.apiUrl);
+    return this.http.get(environment.apiUrl);
   }
 }
