@@ -1,31 +1,29 @@
-import { TestBed, async } from '@angular/core/testing';
+import { StoryserviceService } from './storyservice.service';
 import { AppComponent } from './app.component';
+import { Observable, from  } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  }));
+  let component:AppComponent;
+  let service:StoryserviceService;
+  let spinner: NgxSpinnerService; 
+  beforeEach(()=>{
+     spinner = new NgxSpinnerService();
+     service = new StoryserviceService(null);
+     component = new AppComponent(service,spinner);
+  })
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+  it('should have stories array from server', () => {
+    let todos = [1, 2, 3];
+
+    spyOn(service, 'getStories').and.callFake(() => {
+      return from([todos]);
+    });
+
+    component.ngOnInit();
+
+    expect(component.stories.length).toBe(3);
+
   });
 
-  it(`should have as title 'stories-ui'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('stories-ui');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to stories-ui!');
-  });
 });
